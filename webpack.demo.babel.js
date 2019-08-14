@@ -8,13 +8,6 @@ export const minifyPlugins = [
       NODE_ENV: JSON.stringify('production')
     }
   }),
-  new webpack.optimize.UglifyJsPlugin({
-    sourceMap: true,
-    comments: false,
-    mangle: {
-      except: [ 'ReactPlayer' ]
-    }
-  }),
   new webpack.LoaderOptionsPlugin({ minimize: true })
 ]
 
