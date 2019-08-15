@@ -147,7 +147,7 @@ test('load - MediaStream', t => {
   t.falsy(instance.player.src)
 })
 
-test('load - MediaStream', t => {
+test('load - MediaStream 2', t => {
   const url = new MockMediaStream()
   const instance = shallow(<FilePlayer url={url} config={config} />).instance()
   Object.defineProperty(instance.player, 'srcObject', {
@@ -264,7 +264,7 @@ test('unmute()', t => {
   t.false(instance.player.muted)
 })
 
-test('setVolume()', t => {
+test('setPlaybackRate()', t => {
   const instance = shallow(<FilePlayer url='file.mp4' config={config} />).instance()
   instance.setPlaybackRate(0.5)
   t.true(instance.player.playbackRate === 0.5)

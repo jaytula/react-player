@@ -57,19 +57,19 @@ test('load()', t => {
   })
 })
 
-test('getDuration()', t => {
+test('Streamable: getDuration()', t => {
   const instance = shallow(<Streamable url={TEST_URL} />).instance()
   instance.duration = 10
   t.true(instance.getDuration() === 10)
 })
 
-test('getCurrentTime()', t => {
+test('Streamable: getCurrentTime()', t => {
   const instance = shallow(<Streamable url={TEST_URL} />).instance()
   instance.currentTime = 5
   t.true(instance.getCurrentTime() === 5)
 })
 
-test('getSecondsLoaded()', t => {
+test('Streamable: getSecondsLoaded()', t => {
   const instance = shallow(<Streamable url={TEST_URL} />).instance()
   instance.secondsLoaded = 5
   t.true(instance.getSecondsLoaded() === 5)
