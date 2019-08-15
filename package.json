@@ -58,9 +58,11 @@
     "@babel/plugin-proposal-json-strings": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
     "auto-changelog": "^1.11.0",
     "ava": "^2.2.0",
     "babel-eslint": "^10.0.2",
@@ -104,44 +106,6 @@
     "load-script": "^1.0.0",
     "prop-types": "^15.5.6"
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "targets": {
-            "esmodules": true
-          }
-        }
-      ],
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-syntax-dynamic-import",
-      "@babel/plugin-syntax-import-meta",
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": false
-        }
-      ],
-      "@babel/plugin-proposal-json-strings",
-      "react-hot-loader/babel"
-    ],
-    "env": {
-      "production": {
-        "plugins": [
-          "transform-es3-member-expression-literals",
-          "transform-es3-property-literals"
-        ]
-      },
-      "test": {
-        "plugins": [
-          "istanbul"
-        ]
-      }
-    }
-  },
   "postcss": {
     "plugins": {
       "postcss-nested": {},
@@ -167,5 +131,8 @@
       "text",
       "html"
     ]
+  },
+  "ava": {
+    "require": ["@babel/register"]
   }
 }
