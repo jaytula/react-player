@@ -1,7 +1,7 @@
 import { join } from 'path'
 import webpack from 'webpack'
-import { extract } from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 const PORT = 3000
 const PRODUCTION = process.env.NODE_ENV === 'production'
@@ -38,11 +38,11 @@ export default {
       },
       {
         test: /\.css$/,
-        use: styleLoader([
-          'style-loader',
+        use: [
+          process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
           'css-loader?sourceMap',
           'postcss-loader?sourceMap'
-        ]),
+        ],
         include: PATH_SRC
       }
     ]
@@ -67,12 +67,4 @@ export default {
       colors: true
     }
   }
-}
-
-function styleLoader (loaders) {
-  if (process.env.NODE_ENV === 'production') {
-    const [fallback, ...use] = loaders
-    return extract({ fallback, use })
-  }
-  return loaders
 }

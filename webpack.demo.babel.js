@@ -1,5 +1,6 @@
 import webpack from 'webpack'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
 import config, { plugins } from './webpack.config.babel'
 
 export const minifyPlugins = [
@@ -15,13 +16,14 @@ export default {
   ...config,
   devtool: 'source-map',
   entry: [
-    'babel-polyfill',
+    'core-js/stable',
+    'regenerator-runtime/runtime',
     'whatwg-fetch',
     './src/demo/index'
   ],
   plugins: [
     ...plugins,
     ...minifyPlugins,
-    new ExtractTextPlugin({ filename: 'app.css' })
+    new MiniCssExtractPlugin({ filename: 'app.css' })
   ]
 }
