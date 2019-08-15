@@ -54,6 +54,7 @@ test('does not fetch again when loading', async t => {
   //t.true(loadScriptOverride.calledOnce)
 })
 
+/*
 test.skip('waits for sdkReady callback', async t => {
   const loadScriptOverride = sinon.fake(async (url, cb) => {
     cb()
@@ -65,6 +66,7 @@ test.skip('waits for sdkReady callback', async t => {
   t.is(sdk, 'sdk')
   t.true(loadScriptOverride.calledOnce)
 })
+*/
 
 test('multiple sdkReady callbacks', async t => {
   const loadScriptOverride = sinon.fake(async (url, cb) => {
