@@ -11,11 +11,15 @@ const PLAYER_ID_PREFIX = 'twitch-player-'
 
 export class Twitch extends Component {
   static displayName = 'Twitch'
+
   static canPlay = url => MATCH_VIDEO_URL.test(url) || MATCH_CHANNEL_URL.test(url)
+
   static loopOnEnded = true
 
   callPlayer = callPlayer
+
   playerID = PLAYER_ID_PREFIX + randomString()
+
   load (url, isReady) {
     const { playsinline, onError, config } = this.props
     const isChannel = MATCH_CHANNEL_URL.test(url)
@@ -50,36 +54,47 @@ export class Twitch extends Component {
       this.player.addEventListener(OFFLINE, this.props.onLoaded)
     }, onError)
   }
+
   play () {
     this.callPlayer('play')
   }
+
   pause () {
     this.callPlayer('pause')
   }
+
   stop () {
     this.callPlayer('pause')
   }
+
   seekTo (seconds) {
     this.callPlayer('seek', seconds)
   }
+
   setVolume (fraction) {
     this.callPlayer('setVolume', fraction)
   }
+
   mute = () => {
     this.callPlayer('setMuted', true)
   }
+
   unmute = () => {
     this.callPlayer('setMuted', false)
   }
+
   getDuration () {
     return this.callPlayer('getDuration')
   }
+
   getCurrentTime () {
     return this.callPlayer('getCurrentTime')
   }
+
   getSecondsLoaded () {
     return null
   }
+
   render () {
     const style = {
       width: '100%',

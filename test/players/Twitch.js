@@ -36,12 +36,17 @@ testPlayerMethods(Twitch, {
 test('load()', t => {
   class Player {
     static READY = 'READY'
+
     static PLAY = 'PLAY'
+
     static PAUSE = 'PAUSE'
+
     static ENDED = 'ENDED'
+
     constructor (id, options) {
       t.true(id === 'mock-player-id')
     }
+
     addEventListener = (event, fn) => {
       if (event === 'READY') setTimeout(fn, 100)
     }

@@ -37,7 +37,9 @@ testPlayerMethods(Vimeo, {
 test('load()', t => {
   class Player {
     ready = () => Promise.resolve()
+
     getDuration = () => Promise.resolve()
+
     on = (event, fn) => {
       if (event === 'loaded') setTimeout(fn, 100)
     }

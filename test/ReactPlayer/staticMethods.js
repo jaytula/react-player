@@ -26,7 +26,9 @@ test('canPlay()', t => {
 test('addCustomPlayer()', t => {
   class CustomPlayer {
     static displayName = 'CustomPlayer'
+
     static canPlay = url => /example\.com/.test(url)
+
     render () {
       return null
     }

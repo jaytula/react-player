@@ -7,21 +7,35 @@ const SEEK_ON_PLAY_EXPIRY = 5000
 
 export default class Player extends Component {
   static displayName = 'Player'
+
   static propTypes = propTypes
+
   static defaultProps = defaultProps
+
   mounted = false
+
   isReady = false
-  isPlaying = false // Track playing state internally to prevent bugs
-  isLoading = true // Use isLoading to prevent onPause when switching URL
+
+  isPlaying = false
+
+  // Track playing state internally to prevent bugs
+  isLoading = true
+
+  // Use isLoading to prevent onPause when switching URL
   loadOnReady = null
+
   startOnPlay = true
+
   seekOnPlay = null
+
   onDurationCalled = false
+
   componentDidMount () {
     this.mounted = true
     this.player.load(this.props.url)
     this.progress()
   }
+
   componentWillUnmount () {
     clearTimeout(this.progressTimeout)
     clearTimeout(this.durationCheckTimeout)
@@ -33,6 +47,7 @@ export default class Player extends Component {
     }
     this.mounted = false
   }
+
   componentDidUpdate (prevProps) {
     // Invoke player methods based on incoming props
     const { url, playing, volume, muted, playbackRate, pip, loop, activePlayer } = prevProps
@@ -79,22 +94,27 @@ export default class Player extends Component {
       this.player.setLoop(this.props.loop)
     }
   }
+
   getDuration () {
     if (!this.isReady) return null
     return this.player.getDuration()
   }
+
   getCurrentTime () {
     if (!this.isReady) return null
     return this.player.getCurrentTime()
   }
+
   getSecondsLoaded () {
     if (!this.isReady) return null
     return this.player.getSecondsLoaded()
   }
+
   getInternalPlayer = (key) => {
     if (!this.player) return null
     return this.player[key]
   }
+
   progress = () => {
     if (this.props.url && this.player && this.isReady) {
       const playedSeconds = this.getCurrentTime() || 0
@@ -119,6 +139,7 @@ export default class Player extends Component {
     }
     this.progressTimeout = setTimeout(this.progress, this.props.progressFrequency || this.props.progressInterval)
   }
+
   seekTo (amount, type) {
     // When seeking before player is ready, store value and seek later
     if (!this.isReady && amount !== 0) {
@@ -139,6 +160,7 @@ export default class Player extends Component {
     }
     this.player.seekTo(amount)
   }
+
   onReady = () => {
     if (!this.mounted) return
     this.isReady = true
@@ -156,6 +178,7 @@ export default class Player extends Component {
     }
     this.onDurationCheck()
   }
+
   onPlay = () => {
     this.isPlaying = true
     this.isLoading = false
@@ -174,12 +197,14 @@ export default class Player extends Component {
     }
     this.onDurationCheck()
   }
+
   onPause = (e) => {
     this.isPlaying = false
     if (!this.isLoading) {
       this.props.onPause(e)
     }
   }
+
   onEnded = () => {
     const { activePlayer, loop, onEnded } = this.props
     if (activePlayer.loopOnEnded && loop) {
@@ -190,10 +215,12 @@ export default class Player extends Component {
       onEnded()
     }
   }
+
   onError = (...args) => {
     this.isLoading = false
     this.props.onError(...args)
   }
+
   onDurationCheck = () => {
     clearTimeout(this.durationCheckTimeout)
     const duration = this.getDuration()
@@ -206,16 +233,19 @@ export default class Player extends Component {
       this.durationCheckTimeout = setTimeout(this.onDurationCheck, 100)
     }
   }
+
   onLoaded = () => {
     // Sometimes we know loading has stopped but onReady/onPlay are never called
     // so this provides a way for players to avoid getting stuck
     this.isLoading = false
   }
+
   ref = player => {
     if (player) {
       this.player = player
     }
   }
+
   render () {
     const Player = this.props.activePlayer
     if (!Player) {

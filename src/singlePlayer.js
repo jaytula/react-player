@@ -9,40 +9,52 @@ const SUPPORTED_PROPS = Object.keys(propTypes)
 export default function createSinglePlayer (activePlayer) {
   return class SinglePlayer extends Component {
     static displayName = `${activePlayer.displayName}Player`
+
     static propTypes = propTypes
+
     static defaultProps = defaultProps
+
     static canPlay = activePlayer.canPlay
 
     config = getConfig(this.props, defaultProps, true)
+
     shouldComponentUpdate (nextProps) {
       return !isEqual(this.props, nextProps)
     }
+
     componentDidUpdate () {
       this.config = getConfig(this.props, defaultProps)
     }
+
     getDuration = () => {
       if (!this.player) return null
       return this.player.getDuration()
     }
+
     getCurrentTime = () => {
       if (!this.player) return null
       return this.player.getCurrentTime()
     }
+
     getSecondsLoaded = () => {
       if (!this.player) return null
       return this.player.getSecondsLoaded()
     }
+
     getInternalPlayer = (key = 'player') => {
       if (!this.player) return null
       return this.player.getInternalPlayer(key)
     }
+
     seekTo = (fraction, type) => {
       if (!this.player) return null
       this.player.seekTo(fraction, type)
     }
+
     ref = player => {
       this.player = player
     }
+
     render () {
       const { forceVideo, forceAudio, forceHLS, forceDASH } = this.config.file
       const skipCanPlay = forceVideo || forceAudio || forceHLS || forceDASH

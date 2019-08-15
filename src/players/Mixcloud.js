@@ -9,13 +9,19 @@ const MATCH_URL = /mixcloud\.com\/([^/]+\/[^/]+)/
 
 export class Mixcloud extends Component {
   static displayName = 'Mixcloud'
+
   static canPlay = url => MATCH_URL.test(url)
+
   static loopOnEnded = true
 
   callPlayer = callPlayer
+
   duration = null
+
   currentTime = null
+
   secondsLoaded = null
+
   load (url) {
     getSDK(SDK_URL, SDK_GLOBAL).then(Mixcloud => {
       this.player = Mixcloud.PlayerWidget(this.iframe)
@@ -32,39 +38,51 @@ export class Mixcloud extends Component {
       })
     }, this.props.onError)
   }
+
   play () {
     this.callPlayer('play')
   }
+
   pause () {
     this.callPlayer('pause')
   }
+
   stop () {
     // Nothing to do
   }
+
   seekTo (seconds) {
     this.callPlayer('seek', seconds)
   }
+
   setVolume (fraction) {
     // No volume support
   }
+
   mute = () => {
     // No volume support
   }
+
   unmute = () => {
     // No volume support
   }
+
   getDuration () {
     return this.duration
   }
+
   getCurrentTime () {
     return this.currentTime
   }
+
   getSecondsLoaded () {
     return null
   }
+
   ref = iframe => {
     this.iframe = iframe
   }
+
   render () {
     const { url, config } = this.props
     const id = url.match(MATCH_URL)[1]

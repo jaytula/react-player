@@ -9,13 +9,19 @@ const MATCH_URL = /(soundcloud\.com|snd\.sc)\/.+$/
 
 export class SoundCloud extends Component {
   static displayName = 'SoundCloud'
+
   static canPlay = url => MATCH_URL.test(url)
+
   static loopOnEnded = true
 
   callPlayer = callPlayer
+
   duration = null
+
   currentTime = null
+
   fractionLoaded = null
+
   load (url, isReady) {
     getSDK(SDK_URL, SDK_GLOBAL).then(SC => {
       if (!this.iframe) return
@@ -42,41 +48,53 @@ export class SoundCloud extends Component {
       })
     })
   }
+
   play () {
     this.callPlayer('play')
   }
+
   pause () {
     this.callPlayer('pause')
   }
+
   stop () {
     // Nothing to do
   }
+
   seekTo (seconds) {
     this.callPlayer('seekTo', seconds * 1000)
   }
+
   setVolume (fraction) {
     this.callPlayer('setVolume', fraction * 100)
   }
+
   mute = () => {
     this.setVolume(0)
   }
+
   unmute = () => {
     if (this.props.volume !== null) {
       this.setVolume(this.props.volume)
     }
   }
+
   getDuration () {
     return this.duration
   }
+
   getCurrentTime () {
     return this.currentTime
   }
+
   getSecondsLoaded () {
     return this.fractionLoaded * this.duration
   }
+
   ref = iframe => {
     this.iframe = iframe
   }
+
   render () {
     const { display } = this.props
     const style = {

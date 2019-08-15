@@ -11,7 +11,7 @@ export default {
     libraryExport: 'default'
   },
   externals: {
-    'react': 'React'
+    react: 'React'
   },
   module: {
     rules: [

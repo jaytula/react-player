@@ -78,8 +78,11 @@ test('onSeek', t => {
 test('load - hls', async t => {
   class Hls {
     static Events = { ERROR: 'ERROR' }
+
     on = () => null
+
     loadSource = () => null
+
     attachMedia = () => t.pass()
   }
   const url = 'file.m3u8'
@@ -98,10 +101,13 @@ test('onError - hls', t => {
     }
     class Hls {
       static Events = { ERROR: 'ERROR' }
+
       on = (event, cb) => {
         setTimeout(cb, 100)
       }
+
       loadSource = () => null
+
       attachMedia = () => null
     }
     const url = 'file.m3u8'
@@ -160,7 +166,7 @@ test('forceVideo', t => {
     <FilePlayer url='file.mp3' config={{ file: {
       ...config.file,
       forceVideo: true
-    }}} />
+    } }} />
   )
   t.true(wrapper.containsMatchingElement(
     <video src='file.mp3'>{false}{[]}</video>
@@ -172,7 +178,7 @@ test('forceAudio', t => {
     <FilePlayer url='file.mp4' config={{ file: {
       ...config.file,
       forceAudio: true
-    }}} />
+    } }} />
   )
   t.true(wrapper.containsMatchingElement(
     <audio src='file.mp4'>{false}{[]}</audio>
@@ -184,7 +190,7 @@ test('render video poster', t => {
     <FilePlayer url='file.mp3' config={{ file: {
       ...config.file,
       attributes: { poster: 'poster.png' }
-    }}} />
+    } }} />
   )
   t.true(wrapper.containsMatchingElement(
     <video src='file.mp3' poster='poster.png'>{false}{[]}</video>
@@ -364,7 +370,7 @@ test('render tracks', t => {
         { kind: 'subtitles', src: 'subtitles.en.vtt', srcLang: 'en', default: true },
         { kind: 'subtitles', src: 'subtitles.ja.vtt', srcLang: 'ja' }
       ]
-    }}} />
+    } }} />
   )
   t.true(wrapper.containsMatchingElement(
     <video src='file.mp4'>

@@ -16,41 +16,52 @@ export default class ReactPlayer extends Component {
   static addCustomPlayer = player => {
     customPlayers.push(player)
   }
+
   static removeCustomPlayers = () => {
     customPlayers = []
   }
+
   static displayName = 'ReactPlayer'
+
   static propTypes = propTypes
+
   static defaultProps = defaultProps
+
   static canPlay = url => {
-    for (let Player of [ ...customPlayers, ...players ]) {
+    for (const Player of [...customPlayers, ...players]) {
       if (Player.canPlay(url)) {
         return true
       }
     }
     return false
   }
+
   static canEnablePIP = url => {
-    for (let Player of [ ...customPlayers, ...players ]) {
+    for (const Player of [...customPlayers, ...players]) {
       if (Player.canEnablePIP && Player.canEnablePIP(url)) {
         return true
       }
     }
     return false
   }
+
   config = getConfig(this.props, defaultProps, true)
+
   state = {
     showPreview: !!this.props.light
   }
+
   componentDidMount () {
     if (this.props.progressFrequency) {
       const message = 'ReactPlayer: %cprogressFrequency%c is deprecated, please use %cprogressInterval%c instead'
       console.warn(message, 'font-weight: bold', '', 'font-weight: bold', '')
     }
   }
+
   shouldComponentUpdate (nextProps, nextState) {
     return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState)
   }
+
   componentDidUpdate (prevProps) {
     const { light } = prevProps
     this.config = getConfig(this.props, defaultProps)
@@ -61,37 +72,46 @@ export default class ReactPlayer extends Component {
       this.setState({ showPreview: false })
     }
   }
+
   onClickPreview = () => {
     this.setState({ showPreview: false })
   }
+
   showPreview = () => {
     this.setState({ showPreview: true })
   }
+
   getDuration = () => {
     if (!this.player) return null
     return this.player.getDuration()
   }
+
   getCurrentTime = () => {
     if (!this.player) return null
     return this.player.getCurrentTime()
   }
+
   getSecondsLoaded = () => {
     if (!this.player) return null
     return this.player.getSecondsLoaded()
   }
+
   getInternalPlayer = (key = 'player') => {
     if (!this.player) return null
     return this.player.getInternalPlayer(key)
   }
+
   seekTo = (fraction, type) => {
     if (!this.player) return null
     this.player.seekTo(fraction, type)
   }
+
   onReady = () => {
     this.props.onReady(this)
   }
+
   getActivePlayer (url) {
-    for (let Player of [ ...customPlayers, ...players ]) {
+    for (const Player of [...customPlayers, ...players]) {
       if (Player.canPlay(url)) {
         return Player
       }
@@ -99,12 +119,15 @@ export default class ReactPlayer extends Component {
     // Fall back to FilePlayer if nothing else can play the URL
     return FilePlayer
   }
+
   wrapperRef = wrapper => {
     this.wrapper = wrapper
   }
+
   activePlayerRef = player => {
     this.player = player
   }
+
   renderActivePlayer (url, activePlayer) {
     if (!url) return null
     return (
@@ -118,6 +141,7 @@ export default class ReactPlayer extends Component {
       />
     )
   }
+
   sortPlayers (a, b) {
     // Retain player order to prevent weird iframe behaviour when switching players
     if (a && b) {
@@ -125,6 +149,7 @@ export default class ReactPlayer extends Component {
     }
     return 0
   }
+
   render () {
     const { url, controls, style, width, height, light, wrapper: Wrapper } = this.props
     const showPreview = this.state.showPreview && url
@@ -132,7 +157,7 @@ export default class ReactPlayer extends Component {
     const activePlayer = this.getActivePlayer(url)
     const renderedActivePlayer = this.renderActivePlayer(url, activePlayer)
     const preloadPlayers = renderPreloadPlayers(url, controls, this.config)
-    const players = [ renderedActivePlayer, ...preloadPlayers ].sort(this.sortPlayers)
+    const players = [renderedActivePlayer, ...preloadPlayers].sort(this.sortPlayers)
     const preview = <Preview url={url} light={light} onClick={this.onClickPreview} />
     return (
       <Wrapper ref={this.wrapperRef} style={{ ...style, width, height }} {...otherProps}>

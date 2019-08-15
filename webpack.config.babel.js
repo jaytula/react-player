@@ -34,7 +34,7 @@ export default {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [ PATH_SRC, PATH_TESTS ]
+        include: [PATH_SRC, PATH_TESTS]
       },
       {
         test: /\.css$/,
@@ -71,7 +71,7 @@ export default {
 
 function styleLoader (loaders) {
   if (process.env.NODE_ENV === 'production') {
-    const [ fallback, ...use ] = loaders
+    const [fallback, ...use] = loaders
     return extract({ fallback, use })
   }
   return loaders

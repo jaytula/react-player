@@ -10,10 +10,13 @@ const MATCH_URL = /^(?:(?:https?):)?(?:\/\/)?(?:www\.)?(?:(?:dailymotion\.com(?:
 
 export class DailyMotion extends Component {
   static displayName = 'DailyMotion'
+
   static canPlay = url => MATCH_URL.test(url)
+
   static loopOnEnded = true
 
   callPlayer = callPlayer
+
   load (url) {
     const { controls, config, onError, playing } = this.props
     const [, id] = url.match(MATCH_URL)
@@ -52,43 +55,56 @@ export class DailyMotion extends Component {
       })
     }, onError)
   }
+
   onDurationChange = () => {
     const duration = this.getDuration()
     this.props.onDuration(duration)
   }
+
   play () {
     this.callPlayer('play')
   }
+
   pause () {
     this.callPlayer('pause')
   }
+
   stop () {
     // Nothing to do
   }
+
   seekTo (seconds) {
     this.callPlayer('seek', seconds)
   }
+
   setVolume (fraction) {
     this.callPlayer('setVolume', fraction)
   }
+
   mute = () => {
     this.callPlayer('setMuted', true)
   }
+
   unmute = () => {
     this.callPlayer('setMuted', false)
   }
+
   getDuration () {
     return this.player.duration || null
   }
+
   getCurrentTime () {
     return this.player.currentTime
   }
+
   getSecondsLoaded () {
     return this.player.bufferedTime
   }
+
   ref = container => {
     this.container = container
   }
+
   render () {
     const { display } = this.props
     const style = {

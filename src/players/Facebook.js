@@ -11,11 +11,15 @@ const PLAYER_ID_PREFIX = 'facebook-player-'
 
 export class Facebook extends Component {
   static displayName = 'Facebook'
+
   static canPlay = url => MATCH_URL.test(url)
+
   static loopOnEnded = true
 
   callPlayer = callPlayer
+
   playerID = PLAYER_ID_PREFIX + randomString()
+
   load (url, isReady) {
     if (isReady) {
       getSDK(SDK_URL, SDK_GLOBAL, SDK_GLOBAL_READY).then(FB => FB.XFBML.parse())
@@ -54,36 +58,47 @@ export class Facebook extends Component {
       })
     })
   }
+
   play () {
     this.callPlayer('play')
   }
+
   pause () {
     this.callPlayer('pause')
   }
+
   stop () {
     // Nothing to do
   }
+
   seekTo (seconds) {
     this.callPlayer('seek', seconds)
   }
+
   setVolume (fraction) {
     this.callPlayer('setVolume', fraction)
   }
+
   mute = () => {
     this.callPlayer('mute')
   }
+
   unmute = () => {
     this.callPlayer('unmute')
   }
+
   getDuration () {
     return this.callPlayer('getDuration')
   }
+
   getCurrentTime () {
     return this.callPlayer('getCurrentPosition')
   }
+
   getSecondsLoaded () {
     return null
   }
+
   render () {
     const style = {
       width: '100%',
